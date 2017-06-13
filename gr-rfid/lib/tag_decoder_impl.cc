@@ -28,6 +28,7 @@
 #include <cmath>
 #include <sys/time.h>
 #include "tag_decoder_impl.h"
+#include <boost/format.hpp>
 
 namespace gr {
   namespace rfid {
@@ -141,7 +142,8 @@ namespace gr {
       return tag_bits;
     }
 
-
+//not sure why we have an array of floats here -seems like a waste.
+//already hard coded to an EPC of max length 128bit
     std::vector<float>  tag_decoder_impl::tag_detection_EPC(std::vector<gr_complex> & EPC_samples_complex, int index)
     {
       std::vector<float> tag_bits,dist;
@@ -218,7 +220,8 @@ namespace gr {
       std::vector<float> RN16_bits;
       int number_of_half_bits = 0;
 
-      std::vector<float> EPC_bits;    
+      std::vector<float> EPC_bits;
+      unsigned char EPC_bytes[16];
       // Processing only after n_samples_to_ungate are available and we need to decode an RN16
       if (reader_state->decoder_status == DECODER_DECODE_RN16 && ninput_items[0] >= reader_state->n_samples_to_ungate)
       {
