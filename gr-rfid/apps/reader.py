@@ -1,4 +1,4 @@
-#Developed by: Nikos Kargas 
+#Developed by: Nikos Kargas, Andreas Theodosiou
 
 from gnuradio import gr
 from gnuradio import uhd
