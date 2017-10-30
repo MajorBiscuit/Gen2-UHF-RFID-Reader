@@ -1,0 +1,37 @@
+<block>
+  <name>Corr est cc</name>
+  <key>rfid_corr_est_cc</key>
+  <category>rfid</category>
+  <import>import rfid</import>
+  <make>rfid.corr_est_cc($symbols, $sps, $mark_delay, $threshold)</make>
+  <param>
+    <name>Symbols</name>
+    <key>symbols</key>
+    <type>complex_vector</type>
+  </param>
+  <param>
+    <name>Sps</name>
+    <key>sps</key>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Mark_delay</name>
+    <key>mark_delay</key>
+    <type>raw</type>
+  </param>
+  <param>
+    <name>Threshold</name>
+    <key>threshold</key>
+    <value>0.9</value>
+    <type>float</type>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>complex</type>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>complex</type>
+    <nports>2</nports>
+  </source>
+</block>

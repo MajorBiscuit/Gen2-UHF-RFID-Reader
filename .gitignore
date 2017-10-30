@@ -2,3 +2,7 @@ gr-rfid/build/
 gr-rfid/misc/data/
 *.fig
 *.*#
+GPATH
+GRTAGS
+GTAGS
+*~
