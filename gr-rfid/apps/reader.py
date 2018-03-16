@@ -49,20 +49,21 @@ class reader_top_block(gr.top_block):
     #rt = gr.enable_realtime_scheduling()
 
     ######## Variables #########
-    self.dac_rate = 1e6                 # DAC rate
-    self.adc_rate = 100e6/50            # ADC rate (2MS/s complex samples)
-    self.decim     = 5                    # Decimation (downsampling factor)
-    self.ampl     = 0.5                  # Output signal amplitude (signal power vary for different RFX900 cards)
-    self.freq     = 910e6                # Modulation frequency (can be set between 902-920)
-    self.rx_gain   = 20                   # RX Gain (gain at receiver)
-    self.tx_gain   = 0                    # RFX900 no Tx gain option
+    self.dac_rate = 1e6         # DAC rate
+    self.adc_rate = 100e6/50    # ADC rate (2MS/s complex samples)
+    self.decim    = 5          # Decimation (downsampling factor)
+    self.ampl     = 0.5         # Output signal amplitude (signal power vary for different RFX900 cards)
+    self.freq     = 910e6       # Modulation frequency (can be set between 902-920)
+    self.rx_gain  = 20         # RX Gain (gain at receiver)
+    self.tx_gain  = 0          # RFX900 no Tx gain option
+    BLF           = 100e3       # Backscatter link frequenc
 
     self.usrp_address_source = "addr=192.168.10.2,recv_frame_size=256"
     self.usrp_address_sink   = "addr=192.168.10.2,recv_frame_size=256"
 
     # Each FM0 symbol consists of ADC_RATE/BLF samples (2e6/40e3 = 50 samples)
     # 10 samples per symbol after matched filtering and decimation
-    self.num_taps     = [1] * 25 # matched to half symbol period
+    self.num_taps     = [1] * (int)(self.adc_rate/BLF/2) # matched to half symbol period
 
     ######## File sinks for debugging (1 for each block) #########
     self.file_sink_source         = blocks.file_sink(gr.sizeof_gr_complex*1, "../misc/data/source", False)
@@ -114,7 +115,7 @@ class reader_top_block(gr.top_block):
     #File sinks for logging
     self.connect(self.gate, self.file_sink_gate)
     self.connect((self.tag_decoder,1), self.file_sink_decoder) # (Do not comment this line)
-    #self.connect(self.file_sink_reader, self.file_sink_reader)
+    self.connect(self.reader, self.file_sink_reader)
     self.connect(self.matched_filter, self.file_sink_matched_filter)
 
 if __name__ == '__main__':
